@@ -1,4 +1,4 @@
-﻿# 🔰AWS CodeCommitを触ってみる
+# 🔰AWS CodeCommitを触ってみる
 
 - なんかちょこっと手軽にプライベートなリポジトリが欲しい。
 - githubに月額払うまでもない感じで本当に手軽に。
@@ -11,8 +11,7 @@
 - [料金　AWS CodeCommit](https://aws.amazon.com/jp/codecommit/pricing/)
 
 ※2017年08月02日の料金表は下記の様子
-一人でさっくりと使う分には無料分の範囲で十分収まるかと思われる。
-
+一人でさっくりと使う分には無料分の範囲で十分収まるかと思われる。  
 ![](image/price.codecommit.png)
 
 ## 🔰今回利用した環境
@@ -38,12 +37,10 @@
 
 上記ドキュメント等を参考に作業。
 
-IAMコンソールからCodeCommit用のユーザの追加。
-
+IAMコンソールからCodeCommit用のユーザの追加。  
 ![](image/console.iam.create.user.step001.png)
 
-今回はcode.commitというユーザを作成。
-
+今回はcode.commitというユーザを作成。  
 ![](image/console.iam.create.user.step002.png)
 
 AWS CodeCommitにアクセスするための権限を付与するが、git認証を使用する場合とSSHを使用する場合で必要な権限は異なる。
@@ -56,16 +53,13 @@ AWS CodeCommitにアクセスするための権限を付与するが、git認証
 - IAMUserSSHKeys
 - IAMReadOnlyAccess
 
-を選択して次のステップ。
-
+を選択して次のステップ。  
 ![](image/console.iam.create.user.step003.png)
 
-確認画面。ユーザの作成
-
+確認画面。ユーザの作成  
 ![](image/console.iam.create.user.step004.png)
 
-セキュリティ認証情報が取得できるので大切に扱う！
-
+セキュリティ認証情報が取得できるので大切に扱う！  
 ![](image/console.iam.create.uesr.step005.png)
 
 ## 🔰gitのインストール
@@ -104,8 +98,7 @@ AWSのドキュメントに
 実行すると、ファイルを格納するディレクトリとキーフレーズを聞いてくるので入力する。
 キーフレーズは後々使用するのでちゃんと覚えておくこと！
 
-なおパスフレーズなしにしたい時は入力しない。
-
+なおパスフレーズなしにしたい時は入力しない。  
 ![](image/create.ssh.keygen.step001.png)
 
 秘密鍵と公開鍵が指定したディレクトリに作成されている。
@@ -114,30 +107,25 @@ AWSのドキュメントに
 
 - [AWS CLI を使用していない SSH ユーザーの セットアップ](http://docs.aws.amazon.com/ja_jp/codecommit/latest/userguide/setting-up-without-cli.html)
 
-IAMユーザで作成したユーザの認証タブにあるSSH公開キーのアップロード。
-
+IAMユーザで作成したユーザの認証タブにあるSSH公開キーのアップロード。  
 ![](image/console.iam.credential.ssh.step001.png)
 
-ポップアップが出てくるのでSSHの公開キーを入力。
-
+ポップアップが出てくるのでSSHの公開キーを入力。  
 ![](image/console.iam.credential.ssh.step002.png)
 
-適当なエディタで公開鍵のファイルを開いて内容をコピーしてAWSコンソールにペーストしてSSH　公開キーのアップロード。
-
+適当なエディタで公開鍵のファイルを開いて内容をコピーしてAWSコンソールにペーストしてSSH　公開キーのアップロード。  
 ![](image/console.iam.credential.ssh.step003.png)
 
-追加されました。
-
+追加されました。  
 ![](image/console.iam.credential.ssh.step004.png)
 
 ### 🔰SSH 設定に AWS CodeCommit を追加する
 
+- [ステップ 2: SSH 設定に AWS CodeCommit を追加する](http://docs.aws.amazon.com/ja_jp/codecommit/latest/userguide/setting-up-without-cli.html)
+  
 ![](image/ssh.setting.code.commit.png)
 
-- [ステップ 2: SSH 設定に AWS CodeCommit を追加する](http://docs.aws.amazon.com/ja_jp/codecommit/latest/userguide/setting-up-without-cli.html)
-
-を参考に、ユーザフォルダの直下に作成した.sshディレクトリにconfigファイルを作成する。
-
+を参考に、ユーザフォルダの直下に作成した.sshディレクトリにconfigファイルを作成する。  
 ![](image/ssh.setting.config.file.png)
 
 ## 🔰CodeCommitでリポジトリの作成
@@ -147,26 +135,22 @@ CodeCommitを使えるリージョンを選択。
 
 CodeCommitのページで **今すぐ始める**
 
-リポジトリ名と説明を入力して **リポジトリの作成**
-
+リポジトリ名と説明を入力して **リポジトリの作成**  
 ![](image/console.codecommit.create.repository.step001.png)
 
 ![](image/console.codecommit.create.repository.step002.png)
 
-空のリポジトリができた。
-
+空のリポジトリができた。  
 ![](image/code.commit.helloworld.empty.png)
 
 ## 🔰CodeCommitのリポジトリに接続
 
 CodeCommitでリポジトリを作ると下記のようなページが表示されます。（もしくはリポジトリの接続ボタンを押すと表示される）
-本資料ではSSHで接続するので接続タイプにSSHを選ぶと、前提条件だったり説明が表示されます。
-
+本資料ではSSHで接続するので接続タイプにSSHを選ぶと、前提条件だったり説明が表示されます。  
 ![](image/console.codecommit.connect.repository.ssh.png)
 
 ちなみにルートアカウントでリポジトリにアクセスすると下記のように警告がでたりします。
-適当なIAMユーザを作成して作業しましょう。（今回code.commitを作成して利用してるように）
-
+適当なIAMユーザを作成して作業しましょう。（今回code.commitを作成して利用してるように）  
 ![](image/console.codecommit.connect.repository.warning.png)
 
 ## 🔰CodeCommitのリポジトリをクローン
@@ -175,12 +159,10 @@ CodeCommitでリポジトリを作ると下記のようなページが表示さ�
 
 接続してもいいかと来てくるのでyes。
 
-パスフレーズを聞いてくるので入力。
-
+パスフレーズを聞いてくるので入力。  
 ![](image/code.commit.git.clone.step001.png)
 
-ディレクトリができた。
-
+ディレクトリができた。  
 ![](image/code.commit.git.clone.step002.png)
 
 なお、公式ドキュメントのここらへんが参考になります。
@@ -198,11 +180,9 @@ git config --local user.email other-email-address
 
 ## 🔰適当に開発
 
-![](image/develop.helloworld.png)
-
 とりえあずcloneして出来たディレクトリで開発作業のてい。
-
-helloworld.ps1というファイルを作成。中身はhelloWorldを表示するスクリプト。
+helloworld.ps1というファイルを作成。中身はhelloWorldを表示するスクリプト。  
+![](image/develop.helloworld.png)
 
 ```Powershell
 write-host "helloWorld"
